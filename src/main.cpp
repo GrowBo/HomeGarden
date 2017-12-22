@@ -5,5 +5,5 @@ void setup() {
 }
 
 void loop() {
-    // psdfsdfut your main code here, to run repeatedly:
+    // psdfsdfihaoefhut your main code here, to run repeatedly:
 }
