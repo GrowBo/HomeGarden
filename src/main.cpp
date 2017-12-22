@@ -6,6 +6,6 @@ void setup() {
 
 void loop() {
 
-    // psdfsdfihaoefhut your main code here, to run repeatedly:
+    // psdfsdfihaoefhut your main code herdadade, to run repeatedly:
 
 }
