@@ -12,14 +12,13 @@
 // #define PinX 0
 // #define PinX 0
 
-//Var
+//Var GLOBAL
 Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor);
 
 void setup() {
+    Serial.begin(9600);
     // put your setup code here, to run once:
     // pinMode();
-
-
 }
 
 void loop() {
