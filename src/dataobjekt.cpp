@@ -37,3 +37,19 @@ float Dataobjekt::getph(){
 float Dataobjekt::gettemp(){
   return temp;
 }
+
+float Dataobjekt::getphlow(){
+  return phlow;
+}
+
+float Dataobjekt::getphhigh(){
+  return phhigh;
+}
+
+float Dataobjekt::geteclow(){
+  return eclow;
+}
+
+float Dataobjekt::getechigh(){
+  return echigh;
+}

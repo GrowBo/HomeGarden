@@ -23,6 +23,10 @@ class Dataobjekt{
     float getec();
     float getph();
     float gettemp();
+    float getphlow();
+    float getphhigh();
+    float geteclow();
+    float getechigh();
   };
 
 #endif

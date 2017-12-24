@@ -32,7 +32,7 @@ void loop() {
     checkForDataCorrectness(); //just a failsave for debugging. Shoud see if there are values we can work with.
 
 //PH
-    if (allmadata.getph() > phLOW && allmadata.getph() < phHIGH) {
+    if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {
       //send all okay ph
     }
     else{
@@ -40,7 +40,7 @@ void loop() {
     }
 
 //EC
-    if (allmadata.getec() > ecLOW && allmadata.getec() < ecHIGH){
+    if (allmadata.getec() > allmadata.geteclow() && allmadata.getec() < allmadata.getechigh()){
       //send all okay ec
     }
     else{
