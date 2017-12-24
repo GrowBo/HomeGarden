@@ -1,28 +1,32 @@
 //all the #include here:
 #include <Arduino.h>
-#include "../lib/ph.h"
-#include "../lib/ec.h"
-#include "../lib/temp.h"
 #include "../lib/pythonparser.h"
 #include "../lib/debug.h"
+#include "../lib/dataobjekt.h"
 
 //all the #define here:
+#define PinEcSensor 4
+#define PinPhSensor 5
+#define PinTempSensor 6
 // #define PinX 0
 // #define PinX 0
 // #define PinX 0
-// #define PinX 0
+
+//Var
+Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor);
 
 void setup() {
     // put your setup code here, to run once:
     // pinMode();
 
+
 }
 
 void loop() {
-    getTemprature_Data(); //Returnes the temprature. Would say in a float or sth. Celsius.
-    getPH_Data(); //returnes average ph value over a time of 30 min or so. float
-    getEC_Data(); //returnes current Conductivity (maybe also an average Value). also float?
-    //All the data should be in one Object?
+  //will produce a chart, where we can see the strukture ...
+    allmadata.checkph();
+    allmadata.checkec();
+    allmadata.checktemp();
 
     checkForDataCorrectness(); //just a failsave for debugging. Shoud see if there are values we can work with.
 

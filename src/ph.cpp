@@ -4,7 +4,7 @@ void getPH_Data(){
     //stuff
 }
 
-float ph_check() {
+float ph_check(int pin) {
   //stuff
 }
 
