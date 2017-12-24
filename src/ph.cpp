@@ -1,6 +1,6 @@
 #include "../lib/ph.h"
 
-getPH_Data(){
+void getPH_Data(){
     //stuff
 }
 

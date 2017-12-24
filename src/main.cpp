@@ -1,6 +1,10 @@
 //all the #include here:
 #include <Arduino.h>
 #include "../lib/ph.h"
+#include "../lib/ec.h"
+#include "../lib/temp.h"
+#include "../lib/pythonparser.h"
+#include "../lib/debug.h"
 
 //all the #define here:
 // #define PinX 0
