@@ -1,6 +1,6 @@
 #ifndef EC_H
 #define EC_H
 
-float ec_check(int pin);
+float ec_messure(int pin);
 
 #endif

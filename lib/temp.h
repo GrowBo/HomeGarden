@@ -1,6 +1,6 @@
 #ifndef TEMP_H
 #define TEMP_H
 
-float temp_check(int pin);
+float temp_messure(int pin);
 
 #endif

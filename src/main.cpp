@@ -24,16 +24,30 @@ void setup() {
 
 void loop() {
   //will produce a chart, where we can see the strukture ...
-    allmadata.checkph();
-    allmadata.checkec();
-    allmadata.checktemp();
+  //get all the data...
+    allmadata.updateph();
+    allmadata.updateec();
+    allmadata.updatetemp();
 
     checkForDataCorrectness(); //just a failsave for debugging. Shoud see if there are values we can work with.
 
-    ph_check(); //Should check if the pH is Balanced if it is just skip. If not run ph_adjust();
-    temp_check(); //does nothing for now, but could be addet in the future
-    ec_check(); // Should check if the EC is correct. If not run ec_adjust();
+//PH
+    if (allmadata.getph() > phLOW && allmadata.getph() < phHIGH) {
+      //send all okay ph
+    }
+    else{
+      //ph_adjust
+    }
 
+//EC
+    if (allmadata.getec() > ecLOW && allmadata.getec() < ecHIGH){
+      //send all okay ec
+    }
+    else{
+      //ec_adjust
+    }
+
+//Data
     //all the checks should log their actions!
     sendDataToPi(); //Display the Data to the User aka. send it to the pi and the pi should display it to the user.
 

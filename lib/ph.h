@@ -1,5 +1,5 @@
 #ifndef PH_H
 #define PH_H
 
-float ph_check(int pin);
+float ph_messure(int pin);
 #endif

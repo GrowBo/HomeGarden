@@ -14,14 +14,26 @@ Dataobjekt::~Dataobjekt(){
   Serial.print("Dataobjekt wurde geloescht");
 }
 
-float Dataobjekt::checkph(){
-  return ph_check(PinPhSensor);
+void Dataobjekt::updateph(){
+  this->ph = ph_messure(PinPhSensor);
 }
 
-float Dataobjekt::checkec(){
-  return ec_check(PinEcSensor);
+void Dataobjekt::updateec(){
+  this->ec = ec_messure(PinEcSensor);
 }
 
-void Dataobjekt::checktemp(){
-  this->temp = temp_check(PinTempSensor);
+void Dataobjekt::updatetemp(){
+  this->temp = temp_messure(PinTempSensor);
+}
+
+float Dataobjekt::getec(){
+  return ec;
+}
+
+float Dataobjekt::getph(){
+  return ph;
+}
+
+float Dataobjekt::gettemp(){
+  return temp;
 }

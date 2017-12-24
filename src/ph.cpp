@@ -1,10 +1,6 @@
 #include "../lib/ph.h"
 
-void getPH_Data(){
-    //stuff
-}
-
-float ph_check(int pin) {
+float ph_messure(int pin) {
   //stuff
 }
 

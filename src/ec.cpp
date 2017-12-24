@@ -1,6 +1,6 @@
 #include "../lib/ec.h"
 #include <Arduino.h>
 
-float ec_check(){
+float ec_messure(){
 
 }

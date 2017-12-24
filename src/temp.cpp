@@ -1,5 +1,5 @@
 #include "../lib/temp.h"
 
-float temp_check(int pin){
-    
+float temp_messure(int pin){
+
 }
