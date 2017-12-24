@@ -17,9 +17,11 @@ class Dataobjekt{
   public:
     Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor);
     ~Dataobjekt();
+    //messureup
     void updateph();
     void updateec();
     void updatetemp();
+    //GET
     float getec();
     float getph();
     float gettemp();
@@ -27,6 +29,14 @@ class Dataobjekt{
     float getphhigh();
     float geteclow();
     float getechigh();
+    //SET
+    void setec(float ec);
+    void setph(float ph);
+    void settemp(float temp);
+    void setphlow(float phlow);
+    void setphhigh(float phhigh);
+    void seteclow(float eclow);
+    void setechigh(float echigh);
   };
 
 #endif

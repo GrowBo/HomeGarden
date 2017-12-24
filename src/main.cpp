@@ -29,7 +29,7 @@ void loop() {
     allmadata.updateec();
     allmadata.updatetemp();
 
-    checkForDataCorrectness(); //just a failsave for debugging. Shoud see if there are values we can work with.
+    checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
 
 //PH
     if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {

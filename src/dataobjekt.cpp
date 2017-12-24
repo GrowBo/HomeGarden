@@ -26,6 +26,8 @@ void Dataobjekt::updatetemp(){
   this->temp = temp_messure(PinTempSensor);
 }
 
+//GET
+
 float Dataobjekt::getec(){
   return ec;
 }
@@ -52,4 +54,34 @@ float Dataobjekt::geteclow(){
 
 float Dataobjekt::getechigh(){
   return echigh;
+}
+
+//SET
+
+void Dataobjekt::setec(float ec){
+    this->ec = ec;
+}
+
+void Dataobjekt::setph(float ph){
+  this->ph = ph;
+}
+
+void Dataobjekt::settemp(float temp){
+  this->temp = temp;
+}
+
+void Dataobjekt::setphlow(float phlow){
+  this->phlow = phlow;
+}
+
+void Dataobjekt::setphhigh(float phhigh){
+  this->phhigh = phhigh;
+}
+
+void Dataobjekt::seteclow(float eclow){
+  this->eclow = eclow;
+}
+
+void Dataobjekt::setechigh(float echigh){
+  this->echigh = echigh;
 }
