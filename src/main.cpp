@@ -24,6 +24,8 @@ void setup() {
 void loop() {
   //will produce a chart, where we can see the strukture ...
   //get all the data...
+
+  //json parser should fill all the allmadata.phhigh and allmadata.phlow etc.
     allmadata.updateph();
     allmadata.updateec();
     allmadata.updatetemp();

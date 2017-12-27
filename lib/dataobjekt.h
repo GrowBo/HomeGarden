@@ -6,13 +6,18 @@ class Dataobjekt{
     int PinEcSensor;
     int PinPhSensor;
     int PinTempSensor;
+
     float ph;
     float ec;
     float temp;
+
     float phlow;
     float phhigh;
+
     float eclow;
     float echigh;
+
+
 
   public:
     Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor);
