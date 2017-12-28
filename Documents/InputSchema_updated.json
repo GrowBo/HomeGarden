@@ -8,10 +8,8 @@
                 "type": "object",
 				 "Properties": 
 				{
-						"StartDate": {"type": "Date"},
-						"EndDate": {"type": "Date"},
-						"StartTime": {"type": "Time"},
-						"EndTime": {"type": "Time"},
+						"StartDateTime": {"type": "Date"},
+						"EndDateTime": {"type": "Date"}
 				},
 				"required": ["StartDate", "EndDate", "StartTime", "EndTime"]
             },
@@ -29,9 +27,9 @@
 						"StartDate": {"type": "Date"},
 						"EndDate": {"type": "Date"},
 						"ECValue": {"type": "Float"},
-						"Accuracy" : {"type": "Integer"},
+						"Accuracy" : {"type": "Float"},
 				},
-             "required": ["StartDate", "EndDate", "StartTime", "EndTime"]
+             "required": ["StartDate", "EndDate", "ECValue", "Accuracy"]
             },
        "minItems": 1
     },    
@@ -47,9 +45,9 @@
 						"StartDate": {"type": "Date"},
 						"EndDate": {"type": "Date"},
 						"PHValue": {"type": "Float"},
-						"Accuracy" : {"type": "Integer"},
+						"Accuracy" : {"type": "Float"},
 				},
-             "required": ["StartDate", "EndDate", "StartTime", "EndTime"]
+             "required": ["StartDate", "EndDate", "PHValue", "Accuracy"]
             },
        "minItems": 1
     },
@@ -72,16 +70,14 @@
                 "type": "object",
 				 "Properties": 
 				{
-						"StartDate": {"type": "Date"},
-						"EndDate": {"type": "Date"},
-						"StartTime": {"type": "Time"},
-						"EndTime": {"type": "Time"},
-						"Speed" : {"type": "String"},
+						"StartDateTime": {"type": "Date"},
+						"EndDateTime": {"type": "Date"},
+						"Speed" : {"type": "String"}
 				},
-             "required": ["StartDate", "EndDate", "StartTime", "EndTime"]
+             "required": ["StartDate", "EndDate", "StartTime", "EndTime", "Speed"]
         },
        "minItems": 1
     },      
-  "required": [ "LEDTime", "Nutritions", "PH", "AirflowVent_1", "AirflowVent_2" ],
+  "required": ["LED", "Nutritions", "PH", "AirflowVent_1", "AirflowVent_2" ],
   "additionalProperties": false
 }
