@@ -19,6 +19,7 @@ void setup() {
     Serial.begin(9600);
     // put your setup code here, to run once:
     // pinMode();
+    pinMode(13,OUTPUT);
 }
 
 void loop() {
@@ -26,6 +27,8 @@ void loop() {
   //get all the data...
 
   //json parser should fill all the allmadata.phhigh and allmadata.phlow etc.
+
+
     allmadata.updateph();
     allmadata.updateec();
     allmadata.updatetemp();
@@ -47,10 +50,9 @@ void loop() {
     else{
       //ec_adjust
     }
-
 //Data
     //all the checks should log their actions!
-    sendDataToPi(); //Display the Data to the User aka. send it to the pi and the pi should display it to the user.
+  //  sendDataToPi(); //Display the Data to the User aka. send it to the pi and the pi should display it to the user.
 
-    updates_check(); // checks for updates? not sure with this one @Abhishek maybe you can code this section.
+  //  updates_check(); // checks for updates? not sure with this one @Abhishek maybe you can code this section.
 }

@@ -19,7 +19,7 @@ void Dataobjekt::updateph(){
 }
 
 void Dataobjekt::updateec(){
-  this->ec = ec_messure(PinEcSensor);
+  //this->ec = ec_messure(PinEcSensor);
 }
 
 void Dataobjekt::updatetemp(){

@@ -1,6 +1,6 @@
 // SampleParser.cpp : Defines the entry point for the console application.
 //
-
+/*
 #include "stdafx.h"
 #include "string"
 #include "rapidjson/reader.h"
@@ -33,7 +33,7 @@ int main()
 	{
 		 std::cout << e.what();
 	}
-	return 0;	
+	return 0;
 		//MyHandler handler;
 		//Reader reader;
 		//StringStream ss(json);
@@ -199,3 +199,5 @@ ParsedData PopulateData( char JsonInput[])
 		printf("Malformed jason\n");
 	}
 }
+
+*/

@@ -2,7 +2,7 @@
 #include "../lib/ph.h"
 
 //WHAT TO include for Serial stuff?
-Serial.println("Ready");    //Test the serial monitor
+//Serial.println("Ready");    //Test the serial monitor
 unsigned long int avgValue;  //Store the average value of the sensor feedback
 float b;
 int buf[10],temp;
