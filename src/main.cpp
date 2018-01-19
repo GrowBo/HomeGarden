@@ -8,18 +8,28 @@
 #define PinEcSensor 4
 #define PinPhSensor 5
 #define PinTempSensor 6
+#define PinLuefterA 11
 // #define PinX 0
 // #define PinX 0
 // #define PinX 0
 
+//TIMERMAIPULATION
+
+
+
 //Var GLOBAL
-Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor);
+Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor, PinLuefterA);
 
 void setup() {
     Serial.begin(9600);
+
+    //PIN 11&12
+    TCCR1B = (TCCR1B & 0b11111000) | 0x01; //sets the frequence to 31372.55 http://playground.arduino.cc/Main/TimerPWMCheatsheet
     // put your setup code here, to run once:
     // pinMode();
     pinMode(13,OUTPUT);
+    pinMode(PinLuefterA,OUTPUT);
+
 }
 
 void loop() {
@@ -32,6 +42,12 @@ void loop() {
     allmadata.updateph();
     allmadata.updateec();
     allmadata.updatetemp();
+    allmadata.updateluefterA();
+    for (int i=0; i<10; i++) {
+      allmadata.setluefterApower((25*i));
+      allmadata.updateluefterA();
+      delay(1000);
+    }
 
     checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
 

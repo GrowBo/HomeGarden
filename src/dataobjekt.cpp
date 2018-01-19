@@ -4,10 +4,12 @@
 #include "../lib/temp.h"
 #include <Arduino.h>
 
-Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor){
+Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA){
   this->PinEcSensor = PinEcSensor;
   this->PinPhSensor = PinPhSensor;
   this->PinTempSensor = PinTempSensor;
+  this->PinLuefterA = PinLuefterA;
+  luefterApower = 150;
 }
 
 Dataobjekt::~Dataobjekt(){
@@ -25,6 +27,10 @@ void Dataobjekt::updateec(){
 void Dataobjekt::updatetemp(){
   this->temp = temp_messure(PinTempSensor);
 }
+
+void Dataobjekt::updateluefterA(){
+  analogWrite(PinLuefterA, luefterApower);
+};
 
 //GET
 
@@ -56,6 +62,10 @@ float Dataobjekt::getechigh(){
   return echigh;
 }
 
+int Dataobjekt::getluefterApower(){
+  return luefterApower;
+}
+
 //SET
 
 void Dataobjekt::setec(float ec){
@@ -84,4 +94,13 @@ void Dataobjekt::seteclow(float eclow){
 
 void Dataobjekt::setechigh(float echigh){
   this->echigh = echigh;
+}
+
+void Dataobjekt::setluefterApower(int luefterApower){
+  if (luefterApower >= 0 && luefterApower <= 255){
+    this->luefterApower = luefterApower;
+  }
+  else {
+    //Error report "PWM Value not 0 - 255"
+  }
 }

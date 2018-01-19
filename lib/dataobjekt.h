@@ -6,6 +6,9 @@ class Dataobjekt{
     int PinEcSensor;
     int PinPhSensor;
     int PinTempSensor;
+    int PinLuefterA;
+
+    int luefterApower;
 
     float ph;
     float ec;
@@ -20,12 +23,13 @@ class Dataobjekt{
 
 
   public:
-    Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor);
+    Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA);
     ~Dataobjekt();
     //messureup
     void updateph();
     void updateec();
     void updatetemp();
+    void updateluefterA();
     //GET
     float getec();
     float getph();
@@ -34,6 +38,8 @@ class Dataobjekt{
     float getphhigh();
     float geteclow();
     float getechigh();
+
+    int getluefterApower();
     //SET
     void setec(float ec);
     void setph(float ph);
@@ -42,6 +48,7 @@ class Dataobjekt{
     void setphhigh(float phhigh);
     void seteclow(float eclow);
     void setechigh(float echigh);
+    void setluefterApower(int luefterApower);
   };
 
 #endif
