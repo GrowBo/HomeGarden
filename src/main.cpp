@@ -42,14 +42,15 @@ void loop() {
     allmadata.updateph();
     allmadata.updateec();
     allmadata.updatetemp();
-    allmadata.updateluefterA();
-    for (int i=0; i<10; i++) {
-      allmadata.setluefterApower((25*i));
-      allmadata.updateluefterA();
-      delay(1000);
-    }
+    allmadata.updateluefterA(); //only when changes occur
 
     checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
+
+//IF CHANGES FOR VENT 1
+/*
+allmadata.setluefterApower(input); //input needs to be 0-255 function checks it tho.
+allmadata.updateluefterA();
+*/
 
 //PH
     if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {
