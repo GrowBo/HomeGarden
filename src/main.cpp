@@ -9,6 +9,17 @@
 #define PinPhSensor 5
 #define PinTempSensor 6
 #define PinLuefterA 11
+
+#define Relai1 XX
+#define Relai2 XX
+#define Relai3 XX
+#define Relai4 XX
+
+#define Relai5 XX
+#define Relai6 XX
+#define Relai7 XX
+#define Relai8 XX
+
 // #define PinX 0
 // #define PinX 0
 // #define PinX 0
@@ -51,6 +62,15 @@ void loop() {
 allmadata.setluefterApower(input); //input needs to be 0-255 function checks it tho.
 allmadata.updateluefterA();
 */
+
+//IF PUMP OR AN OTHER RELAY NEEDS TO SWITCH ON
+/*
+pumpitvolume(pin,ml) //pin as defined top so Relai1 - Relai8; ml in ml :P;
+pumpit(pin,time) //pin as defined top so Relai1 - Relai8; Time in ms;
+onoff(pin,on or off) // pin as defined top to Relai1- Relai8; on or off as 1 or 0;
+*/
+
+
 
 //PH
     if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {
