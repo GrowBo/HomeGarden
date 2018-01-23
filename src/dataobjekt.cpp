@@ -69,7 +69,7 @@ int Dataobjekt::getluefterApower(){
 //SET
 
 void Dataobjekt::setec(float ec){
-    this->ec = ec;
+  this->ec = ec;
 }
 
 void Dataobjekt::setph(float ph){

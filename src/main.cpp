@@ -10,25 +10,18 @@
 #define PinTempSensor 6
 #define PinLuefterA 11
 
-#define Relai1 XX
-#define Relai2 XX
-#define Relai3 XX
-#define Relai4 XX
+#define Relai1 XX   //NAME IT!
+#define Relai2 XX   //NAME IT!
+#define Relai3 XX   //NAME IT!
+#define Relai4 XX   //NAME IT!
 
-#define Relai5 XX
-#define Relai6 XX
-#define Relai7 XX
-#define Relai8 XX
+#define Relai5 XX   //NAME IT!
+#define Relai6 XX   //NAME IT!
+#define Relai7 XX   //NAME IT!
+#define Relai8 XX   //NAME IT!
 
 // #define PinX 0
 // #define PinX 0
-// #define PinX 0
-
-//TIMERMAIPULATION
-
-
-
-//Var GLOBAL
 Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor, PinLuefterA);
 
 void setup() {
@@ -41,6 +34,16 @@ void setup() {
     pinMode(13,OUTPUT);
     pinMode(PinLuefterA,OUTPUT);
 
+    pinMode(Relai1,OUTPUT);
+    pinMode(Relai2,OUTPUT);
+    pinMode(Relai3,OUTPUT);
+    pinMode(Relai4,OUTPUT);
+
+    pinMode(Relai5,OUTPUT);
+    pinMode(Relai6,OUTPUT);
+    pinMode(Relai7,OUTPUT);
+    pinMode(Relai8,OUTPUT);
+
 }
 
 void loop() {
@@ -51,9 +54,20 @@ void loop() {
 
 
     allmadata.updateph();
+    Serial.print("pH wurde geupdated.\t pH ist ");
+    Serial.println(allmadata.getph());
+
     allmadata.updateec();
+    Serial.print("EC wurde geupdated.\t EC ist ");
+    Serial.println(allmadata.getec());
+
     allmadata.updatetemp();
+    Serial.print("Temp wurde geupdated.\t Temp ist ");
+    Serial.println(allmadata.gettemp());
+
     allmadata.updateluefterA(); //only when changes occur
+    Serial.print("LuefterA wurde geupdated.\t LuefterA ist ");
+    Serial.println(allmadata.getluefterApower());
 
     checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
 
