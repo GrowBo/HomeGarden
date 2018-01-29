@@ -3,6 +3,8 @@
 #include "../lib/pythonparser.h"
 #include "../lib/debug.h"
 #include "../lib/dataobjekt.h"
+#include "../lib/relai.h"
+
 
 //all the #define here:
 #define PinEcSensor 4
@@ -10,7 +12,7 @@
 #define PinTempSensor 6
 #define PinLuefterA 11
 
-#define Relai1 XX   //NAME IT!
+#define Relai1 51   //NAME IT!
 #define Relai2 XX   //NAME IT!
 #define Relai3 XX   //NAME IT!
 #define Relai4 XX   //NAME IT!
@@ -35,14 +37,14 @@ void setup() {
     pinMode(PinLuefterA,OUTPUT);
 
     pinMode(Relai1,OUTPUT);
-    pinMode(Relai2,OUTPUT);
+/*    pinMode(Relai2,OUTPUT);
     pinMode(Relai3,OUTPUT);
     pinMode(Relai4,OUTPUT);
 
     pinMode(Relai5,OUTPUT);
     pinMode(Relai6,OUTPUT);
     pinMode(Relai7,OUTPUT);
-    pinMode(Relai8,OUTPUT);
+    pinMode(Relai8,OUTPUT);*/
 
 }
 
@@ -83,8 +85,6 @@ pumpitvolume(pin,ml) //pin as defined top so Relai1 - Relai8; ml in ml :P;
 pumpit(pin,time) //pin as defined top so Relai1 - Relai8; Time in ms;
 onoff(pin,on or off) // pin as defined top to Relai1- Relai8; on or off as 1 or 0;
 */
-
-
 
 //PH
     if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {

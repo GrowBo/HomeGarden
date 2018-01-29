@@ -4,26 +4,26 @@
 void onoff(int pin,bool oro){
   pinMode(pin,OUTPUT);
   if (oro == 1) {
-  digitalWrite(pin,HIGH);
+  digitalWrite(pin,LOW);
   }
   else if (oro == 0) {
-    digitalWrite(pin,LOW);
+    digitalWrite(pin,HIGH);
   }
 };
 
 void pumpit(int pin, int timems) {
   pinMode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);
+  digitalWrite(pin, LOW);
   delay(timems);
-  digitalWrite(pin,LOW);
+  digitalWrite(pin,HIGH);
 }
 
 void pumpitvolume(int pin, int volumeml) {
 
-  int timeml=timepervolume*volumeml; //TODO timepervolume needs to be set; AND take care of timeml right rounded
+  int timeml=(0.9090909091*volumeml); //TODO take care of timeml right rounded
 
   pinMode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);
-  delay(timeml);
   digitalWrite(pin,LOW);
+  delay(timeml);
+  digitalWrite(pin,HIGH);
 }
