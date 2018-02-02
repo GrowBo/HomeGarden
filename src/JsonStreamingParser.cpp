@@ -12,11 +12,11 @@ ParsedData ParsedData::PopulateDataRoot()
 	Serial.println("Starting ...");
 	String input =
 			"{\
-						\"LED\":[{\"StartDateTime\": \"12.12.2017T05:45\",\"EndDateTime\": \"12.12.2018T18:45\"}],\
+						\"LED\":[{\"StartDateTime\": \"12.12.2017T05:45:00\",\"EndDateTime\": \"12.12.2018T18:45:00\"}],\
 						\"Nutritions\":[{\"StartDate\": \"12:12:2017\",\"EndDate\": \"12:12:2018\",\"ECValue\": 7.89,\"Accuracy\": 0.5}],\
 						\"PH\":[{\"StartDate\": \"12:12:2017\",\"EndDate\": \"12:12:2018\",\"PHValue\": 7.89,\"Accuracy\": 0.5}],\
-						\"AirflowVent_1\":[{\"Speed\": 255}],
-						\"AirflowVent_2\":[{\"StartDateTime\": \"12.12.2017T05:45\",\"EndDateTime\": \"12.12.2018T18:45\",\"Speed\":\"Medium\"}]\
+						\"AirflowVent_1\":[{\"Speed\": 255}],\
+						\"AirflowVent_2\":[{\"StartDateTime\": \"12.12.2017T05:45\",\"EndDateTime\": \"12.12.2018T18:45\",\"Speed\":255}]\
 					}";
 	JsonObject& root = jsonBuffer.parseObject(input);
 	int LEDArraySize = root["LED"].size();
@@ -61,9 +61,10 @@ ParsedData ParsedData::PopulateDataRoot()
 			Data.P_Defs.push_back(PDef);
 	}
 
-	int Vent1_Speed = Data.getVentSpeed(root["AirflowVent_1"][0]["Speed"].as<String>());
+	int Vent1_Speed = root["AirflowVent_1"][0]["Speed"];
 	Serial.println("Vent1_Speed:");
 	Serial.print(Vent1_Speed);
+	Data.vent1_speed = Vent1_Speed;
 
   int Vent2_ArraySize = root["AirflowVent_2"].size();
 	Serial.println("Vent2_ArraySize:");
@@ -73,7 +74,7 @@ ParsedData ParsedData::PopulateDataRoot()
 			AVent_2 Vent2;
 			Vent2.Vent_StartDateTime = root["AirflowVent_2"][i]["StartDateTime"].as<String>();
 			Vent2.Vent_EndDateTime = root["AirflowVent_2"][i]["EndDateTime"].as<String>();
-			int VentSpeed = Data.getVentSpeed(root["AirflowVent_2"][i]["Speed"].as<String>());
+			int VentSpeed = root["AirflowVent_2"][i]["Speed"];
 			Vent2.VentSpeed = VentSpeed;
 			Data.AirVent_2.push_back(Vent2);
 	}
@@ -81,22 +82,140 @@ ParsedData ParsedData::PopulateDataRoot()
 }
 
 
-int getVentSpeed(String Speed)
+float ParsedData::PhHigh_FromExtern(ParsedData P)
 {
-		if (Speed = "Off")
+		float PhHighValue = 0;
+	 	std::vector<PHDefs>::iterator it;
+
+		for( it = P.P_Defs.begin( ); it != P.P_Defs.end( ); ++it)
 		{
-			return 0;
+				String StartDate, EndDate;
+				StartDate = it->PhStartDate;
+				EndDate = it->PhEndDate;
+				//if()
+				PhHighValue = it->Ph_Value + it->ph_Accuracy;
+				Serial.print("PH HIGH VALUE IS:::::::::::::");
+				Serial.println(PhHighValue);
 		}
-		else if (Speed = "Low")
+		return PhHighValue;
+}
+
+float ParsedData::PhLow_FromExtern(ParsedData P)
+{
+	float PhLowValue = 0;
+	std::vector<PHDefs>::iterator it;
+
+	for( it = P.P_Defs.begin( ); it != P.P_Defs.end( ); ++it)
+	{
+			String StartDate, EndDate;
+			StartDate = it->PhStartDate;
+			EndDate = it->PhEndDate;
+			//if()
+			PhLowValue = it->Ph_Value - it->ph_Accuracy;
+			Serial.print(PhLowValue);
+	}
+	return PhLowValue;
+}
+
+float ParsedData::PhOrg_FromExtern(ParsedData P)
+{
+		float PhValue = 0;
+		std::vector<PHDefs>::iterator it;
+
+		for( it = P.P_Defs.begin( ); it != P.P_Defs.end( ); ++it)
 		{
-			return 1;
+				String StartDate, EndDate;
+				StartDate = it->PhStartDate;
+				EndDate = it->PhEndDate;
+				//if()
+				PhValue = it->Ph_Value;
+				Serial.print(PhValue);
 		}
-		else if (Speed = "Medium")
-		{
-			return 2;
-		}
-		else if (Speed = "High")
-		{
-			return 3;
-		}
+		return PhValue;
+}
+float ParsedData::EcOrg_FromExtern(ParsedData P)
+{
+	float EC_Value = 0;
+	std::vector<NutritionDefs>::iterator it;
+
+	for( it = P.N_Defs.begin( ); it != P.N_Defs.end( ); ++it)
+	{
+			String StartDate, EndDate;
+			StartDate = it->N_StartDate;
+			EndDate = it->N_EndDate;
+			//if()
+			EC_Value = it->EC_Value + it->N_Accuracy;
+			Serial.print(EC_Value);
+	}
+	return EC_Value;
+}
+float ParsedData::EcHigh_FromExtern(ParsedData P)
+{
+	float EC_HighValue = 0;
+	std::vector<NutritionDefs>::iterator it;
+
+	for( it = P.N_Defs.begin( ); it != P.N_Defs.end( ); ++it)
+	{
+			String StartDate, EndDate;
+			StartDate = it->N_StartDate;
+			EndDate = it->N_EndDate;
+			//if()
+			EC_HighValue = it->EC_Value + it->N_Accuracy;
+			Serial.print(EC_HighValue);
+	}
+	return EC_HighValue;
+}
+float ParsedData::EcLow_FromExtern(ParsedData P)
+{
+	float EC_LowValue = 0;
+	std::vector<NutritionDefs>::iterator it;
+
+	for( it = P.N_Defs.begin( ); it != P.N_Defs.end( ); ++it)
+	{
+			String StartDate, EndDate;
+			StartDate = it->N_StartDate;
+			EndDate = it->N_EndDate;
+			//if()
+			EC_LowValue = it->EC_Value + it->N_Accuracy;
+			Serial.print(EC_LowValue);
+	}
+	return EC_LowValue;
+}
+bool ParsedData::LEDState_FromExtern(ParsedData P)
+{
+	bool State = false;
+	std::vector<LEDTimings>::iterator it;
+
+	for( it = P.LedTimes.begin( ); it != P.LedTimes.end( ); ++it)
+	{
+			String StartDate, EndDate;
+			StartDate = it->LED_StartDateTime;
+			EndDate = it->LED_EndDateTime;
+			//if()
+			State = true;
+			Serial.print(State);
+	}
+	return State;
+}
+
+int  ParsedData::Vent1_ValueFromExtern(ParsedData P)
+{
+   return P.vent1_speed;
+}
+
+int  ParsedData::Vent2_valueFromExtern(ParsedData P)
+{
+	int Speed = 0;
+	std::vector<AVent_2>::iterator it;
+
+	for( it = P.AirVent_2.begin( ); it != P.AirVent_2.end( ); ++it)
+	{
+			String StartDate, EndDate;
+			StartDate = it->Vent_StartDateTime;
+			EndDate = it->Vent_EndDateTime;
+			Speed = it->VentSpeed;
+			//if()
+			Serial.print(Speed);
+	}
+	return Speed;
 }

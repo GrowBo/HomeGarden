@@ -1,9 +1,12 @@
 //all the #include here:
+#include <vector>
+#include "ArduinoJson.h"
 #include <Arduino.h>
 #include "../lib/pythonparser.h"
 #include "../lib/debug.h"
 #include "../lib/dataobjekt.h"
 #include "../lib/relai.h"
+#include "../lib/JsonStreamingParser.h"
 
 
 //all the #define here:
@@ -25,7 +28,7 @@
 // #define PinX 0
 // #define PinX 0
 Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor, PinLuefterA);
-
+ParsedData ParsedJsonData;
 void setup() {
     Serial.begin(9600);
 
@@ -35,17 +38,31 @@ void setup() {
     // pinMode();
     pinMode(13,OUTPUT);
     pinMode(PinLuefterA,OUTPUT);
+    ParsedJsonData = ParsedJsonData.PopulateDataRoot();
 
-    pinMode(Relai1,OUTPUT);
-/*    pinMode(Relai2,OUTPUT);
-    pinMode(Relai3,OUTPUT);
-    pinMode(Relai4,OUTPUT);
+    float PhHighValue = ParsedJsonData.PhHigh_FromExtern(ParsedJsonData);
+    allmadata.setphhigh(PhHighValue);
 
-    pinMode(Relai5,OUTPUT);
-    pinMode(Relai6,OUTPUT);
-    pinMode(Relai7,OUTPUT);
-    pinMode(Relai8,OUTPUT);*/
+    float PhLowValue = ParsedJsonData.PhLow_FromExtern(ParsedJsonData);
+    allmadata.setphlow(PhLowValue);
 
+    float phValue = ParsedJsonData.PhOrg_FromExtern(ParsedJsonData);
+    allmadata.setph(phValue);
+
+    float EcHighValue = ParsedJsonData.EcHigh_FromExtern(ParsedJsonData);
+    allmadata.setechigh(EcHighValue);
+
+    float EcLowValue = ParsedJsonData.EcLow_FromExtern(ParsedJsonData);
+    allmadata.seteclow(EcLowValue);
+
+    float EcValue = ParsedJsonData.EcOrg_FromExtern(ParsedJsonData);
+    allmadata.setec(EcValue);
+
+    int Vent2Speed = ParsedJsonData.Vent2_valueFromExtern(ParsedJsonData);
+    allmadata.setluefterApower(Vent2Speed);
+
+    //allmadata.jsetphlow(ParsedJsonData.P_Defs);
+    //Read the json string
 }
 
 void loop() {
