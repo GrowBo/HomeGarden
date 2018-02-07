@@ -1,8 +1,11 @@
+#include <time.h>
+#include <Time.h>
+#include <TimeLib.h>
+#include <Wire.h>
 #include <vector>
 #include "ArduinoJson.h"
 #include <Arduino.h>
 #include "../lib/JsonStreamingParser.h"
-
 
 ParsedData ParsedData::PopulateDataRoot()
 {
@@ -12,7 +15,7 @@ ParsedData ParsedData::PopulateDataRoot()
 	Serial.println("Starting ...");
 	String input =
 			"{\
-						\"LED\":[{\"StartDateTime\": \"12.12.2017T05:45:00\",\"EndDateTime\": \"12.12.2018T18:45:00\"}],\
+						\"LED\":[{\"StartDateTime\": \"12.12.2017 05:45:00\",\"EndDateTime\": \"12.12.2018T18:45:00\"}],\
 						\"Nutritions\":[{\"StartDate\": \"12:12:2017\",\"EndDate\": \"12:12:2018\",\"ECValue\": 7.89,\"Accuracy\": 0.5}],\
 						\"PH\":[{\"StartDate\": \"12:12:2017\",\"EndDate\": \"12:12:2018\",\"PHValue\": 7.89,\"Accuracy\": 0.5}],\
 						\"AirflowVent_1\":[{\"Speed\": 255}],\
@@ -218,4 +221,30 @@ int  ParsedData::Vent2_valueFromExtern(ParsedData P)
 			Serial.print(Speed);
 	}
 	return Speed;
+}
+
+bool ParsedData::GetConvertedTime(String DateTimeString)
+{
+		const char T[] = "2017.11.23 22:05";
+		const char *tempStr = DateTimeString.c_str();
+		int year = 0, month = 0, day = 0, hour = 0, min = 0;
+		sscanf(tempStr, "%4d.%2d.%2d %2d:%2d", &year, &month, &day, &hour, &min);
+
+		tmElements_t tmSet;
+		tmSet.Year = year - 1970;
+		tmSet.Month = month;
+		tmSet.Day = day;
+		tmSet.Hour = hour;
+		tmSet.Minute = min;
+	  time_t Converted_time = makeTime(tmSet);
+		Serial.print("time set to: ");
+		Serial.print(Converted_time);
+
+    time_t nw = now();
+		if(nw == Converted_time)
+		{
+			return 1;
+		}
+		else
+			return 0;
 }

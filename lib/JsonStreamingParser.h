@@ -57,6 +57,7 @@ class ParsedData
 			    bool LEDState_FromExtern(ParsedData v);
 			    int  Vent1_ValueFromExtern(ParsedData v);
 			    int  Vent2_valueFromExtern(ParsedData v);
+					bool GetConvertedTime(String DateTimeString);
 
 };
 

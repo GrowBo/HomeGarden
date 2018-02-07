@@ -7,8 +7,11 @@
 #include "../lib/dataobjekt.h"
 #include "../lib/relai.h"
 #include "../lib/JsonStreamingParser.h"
-
-
+#include <TimeLib.h>
+#include <Time.h>
+#include <Wire.h>
+#include <DS1307RTC.h>
+#include <DS3231.h>
 //all the #define here:
 #define PinEcSensor 4
 #define PinPhSensor 5
@@ -27,10 +30,29 @@
 
 // #define PinX 0
 // #define PinX 0
+
+//TIMERMAIPULATION
+
+
+DS3231 clock;
+RTCDateTime dt;
+//Var GLOBAL
 Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor, PinLuefterA);
 ParsedData ParsedJsonData;
+
+
 void setup() {
     Serial.begin(9600);
+    Wire.begin();
+
+    /* This is alternative to the current time function.
+    clock.begin();
+    clock.setDateTime(2014, 4, 13, 19, 21, 00);
+    dt = clock.getDateTime();
+
+    Serial.print("Long number format:          ");
+    Serial.println(clock.dateFormat("d-m-Y H:i:s", dt));
+  */
 
     //PIN 11&12
     TCCR1B = (TCCR1B & 0b11111000) | 0x01; //sets the frequence to 31372.55 http://playground.arduino.cc/Main/TimerPWMCheatsheet
@@ -38,6 +60,30 @@ void setup() {
     // pinMode();
     pinMode(13,OUTPUT);
     pinMode(PinLuefterA,OUTPUT);
+    tmElements_t tm;
+    if (RTC.read(tm))
+    {
+      setTime(00,15,12,06,02,2018);
+      time_t nw = now();
+      Serial.print("SETTING TIME:");
+      Serial.println(nw);
+    }
+    else
+    {
+      if (RTC.chipPresent()) {
+        Serial.println("The DS3231 is stopped.");
+    }
+    else
+    {
+      Serial.println("DS3231 read error!");
+      Serial.println();
+    }
+  }
+  /*
+      String s = "2015.10.12 12:00";
+      time_t ss = ParsedJsonData.GetConvertedTime(s);
+  */
+
     ParsedJsonData = ParsedJsonData.PopulateDataRoot();
 
     float PhHighValue = ParsedJsonData.PhHigh_FromExtern(ParsedJsonData);
@@ -68,7 +114,13 @@ void setup() {
 void loop() {
   //will produce a chart, where we can see the strukture ...
   //get all the data...
+  /*
+  dt = clock.getDateTime();
 
+  Serial.print("Long number format:          ");
+  Serial.println(clock.dateFormat("d-m-Y H:i:s", dt));
+  delay(5000);
+*/
   //json parser should fill all the allmadata.phhigh and allmadata.phlow etc.
 
 
