@@ -17,16 +17,16 @@ class ParsedData
 			{
 				String N_StartDate;
 				String N_EndDate;
-				float EC_Value;
-				float N_Accuracy;
+				float EC_HighValue;
+				float EC_LowValue;
 			};
 
 			struct PHDefs
 			{
 				String PhStartDate;
 				String PhEndDate;
-				float Ph_Value;
-				float ph_Accuracy;
+				float Ph_HighValue;
+				float Ph_LowValue;
 			};
 
 			struct AVent_2
@@ -57,7 +57,7 @@ class ParsedData
 			    bool LEDState_FromExtern(ParsedData v);
 			    int  Vent1_ValueFromExtern(ParsedData v);
 			    int  Vent2_valueFromExtern(ParsedData v);
-					bool GetConvertedTime(String DateTimeString);
+					bool IsdateIncluded(String StartDateString, String EndDateString, bool CompareDateOnly);
 
 };
 

@@ -60,40 +60,69 @@ void setup() {
     // pinMode();
     pinMode(13,OUTPUT);
     pinMode(PinLuefterA,OUTPUT);
+
+    //TIMER SETTINGS AND INTEGRITY CHECK
     tmElements_t tm;
     if (RTC.read(tm))
     {
+      // setTime(hr,min,sec,day,month,yr);
       setTime(00,15,12,06,02,2018);
-      time_t nw = now();
+      time_t Current_time = now();
       Serial.print("SETTING TIME:");
-      Serial.println(nw);
+      Serial.println(Current_time);
+      Serial.println(".........Current time set on RTC..............");
     }
     else
     {
-      if (RTC.chipPresent()) {
-        Serial.println("The DS3231 is stopped.");
+        if (RTC.chipPresent())
+        {
+            Serial.println("The DS3231 is stopped.");
+        }
+      else
+      {
+          Serial.println("DS3231 read error!");
+          Serial.println();
+      }
     }
-    else
-    {
-      Serial.println("DS3231 read error!");
-      Serial.println();
-    }
-  }
+
+
+    //Read the json string
+    ParsedJsonData = ParsedJsonData.PopulateDataRoot();
+}
+
+void loop() {
+  //will produce a chart, where we can see the strukture ...
+  //get all the data...
+
+    allmadata.updateph();
+    allmadata.updateec();
+    allmadata.updatetemp();
+    allmadata.updateluefterA(); //only when changes occur
+
+  //checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
+
+  //IF CHANGES FOR VENT 1
   /*
-      String s = "2015.10.12 12:00";
-      time_t ss = ParsedJsonData.GetConvertedTime(s);
+  allmadata.setluefterApower(input); //input needs to be 0-255 function checks it tho.
+  allmadata.updateluefterA();
   */
 
-    ParsedJsonData = ParsedJsonData.PopulateDataRoot();
-
+  //IF PUMP OR AN OTHER RELAY NEEDS TO SWITCH ON
+  /*
+  pumpitvolume(pin,ml) //pin as defined top so Relai1 - Relai8; ml in ml :P;
+  pumpit(pin,time) //pin as defined top so Relai1 - Relai8; Time in ms;
+  onoff(pin,on or off) // pin as defined top to Relai1- Relai8; on or off as 1 or 0;
+  */
+  Serial.print("CHECKING THE DATE LIMITS");
+  //CHECK IF THE CURRENT DATE TIME IS WITHIN THE RANGE
     float PhHighValue = ParsedJsonData.PhHigh_FromExtern(ParsedJsonData);
     allmadata.setphhigh(PhHighValue);
 
     float PhLowValue = ParsedJsonData.PhLow_FromExtern(ParsedJsonData);
     allmadata.setphlow(PhLowValue);
 
-    float phValue = ParsedJsonData.PhOrg_FromExtern(ParsedJsonData);
-    allmadata.setph(phValue);
+    //float phValue = ParsedJsonData.PhOrg_FromExtern(ParsedJsonData);
+    //allmadata.setph(phValue);
 
     float EcHighValue = ParsedJsonData.EcHigh_FromExtern(ParsedJsonData);
     allmadata.setechigh(EcHighValue);
@@ -101,71 +130,26 @@ void setup() {
     float EcLowValue = ParsedJsonData.EcLow_FromExtern(ParsedJsonData);
     allmadata.seteclow(EcLowValue);
 
-    float EcValue = ParsedJsonData.EcOrg_FromExtern(ParsedJsonData);
-    allmadata.setec(EcValue);
+    //float EcValue = ParsedJsonData.EcOrg_FromExtern(ParsedJsonData);
+    //allmadata.setec(EcValue);
 
     int Vent2Speed = ParsedJsonData.Vent2_valueFromExtern(ParsedJsonData);
     allmadata.setluefterApower(Vent2Speed);
 
-    //allmadata.jsetphlow(ParsedJsonData.P_Defs);
-    //Read the json string
-}
-
-void loop() {
-  //will produce a chart, where we can see the strukture ...
-  //get all the data...
-  /*
-  dt = clock.getDateTime();
-
-  Serial.print("Long number format:          ");
-  Serial.println(clock.dateFormat("d-m-Y H:i:s", dt));
-  delay(5000);
-*/
-  //json parser should fill all the allmadata.phhigh and allmadata.phlow etc.
-
-
-    allmadata.updateph();
-    Serial.print("pH wurde geupdated.\t pH ist ");
-    Serial.println(allmadata.getph());
-
-    allmadata.updateec();
-    Serial.print("EC wurde geupdated.\t EC ist ");
-    Serial.println(allmadata.getec());
-
-    allmadata.updatetemp();
-    Serial.print("Temp wurde geupdated.\t Temp ist ");
-    Serial.println(allmadata.gettemp());
-
-    allmadata.updateluefterA(); //only when changes occur
-    Serial.print("LuefterA wurde geupdated.\t LuefterA ist ");
-    Serial.println(allmadata.getluefterApower());
-
-    checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
-
-//IF CHANGES FOR VENT 1
-/*
-allmadata.setluefterApower(input); //input needs to be 0-255 function checks it tho.
-allmadata.updateluefterA();
-*/
-
-//IF PUMP OR AN OTHER RELAY NEEDS TO SWITCH ON
-/*
-pumpitvolume(pin,ml) //pin as defined top so Relai1 - Relai8; ml in ml :P;
-pumpit(pin,time) //pin as defined top so Relai1 - Relai8; Time in ms;
-onoff(pin,on or off) // pin as defined top to Relai1- Relai8; on or off as 1 or 0;
-*/
-
-//PH
-    if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {
-      //send all okay ph
+    //PH
+    if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh())
+    {
+      Serial.print("PH is fine. No need for adjustments.");
     }
-    else{
+    else
+    {
       //ph_adjust
     }
 
-//EC
-    if (allmadata.getec() > allmadata.geteclow() && allmadata.getec() < allmadata.getechigh()){
-      //send all okay ec
+    //EC
+    if (allmadata.getec() > allmadata.geteclow() && allmadata.getec() < allmadata.getechigh())
+    {
+      Serial.print("EC is fine. No need for adjustments.");
     }
     else{
       //ec_adjust

@@ -15,11 +15,11 @@ ParsedData ParsedData::PopulateDataRoot()
 	Serial.println("Starting ...");
 	String input =
 			"{\
-						\"LED\":[{\"StartDateTime\": \"12.12.2017 05:45:00\",\"EndDateTime\": \"12.12.2018T18:45:00\"}],\
-						\"Nutritions\":[{\"StartDate\": \"12:12:2017\",\"EndDate\": \"12:12:2018\",\"ECValue\": 7.89,\"Accuracy\": 0.5}],\
-						\"PH\":[{\"StartDate\": \"12:12:2017\",\"EndDate\": \"12:12:2018\",\"PHValue\": 7.89,\"Accuracy\": 0.5}],\
+						\"LED\":[{\"StartDateTime\": \"2018.02.10 05:45\",\"EndDateTime\": \"2018.02.10 05:45 18:45\"}],\
+						\"Nutritions\":[{\"StartDate\": \"2018.01.10\",\"EndDate\": \"2018.02.15\",\"ECHighValue\": 7.0,\"ECLowValue\": 6.0}],\
+						\"PH\":[{\"StartDate\": \"2018.03.10\",\"EndDate\": \"2018.02.15\",\"PHHighValue\": 6.0,\"PHLowValue\": 2.0}],\
 						\"AirflowVent_1\":[{\"Speed\": 255}],\
-						\"AirflowVent_2\":[{\"StartDateTime\": \"12.12.2017T05:45\",\"EndDateTime\": \"12.12.2018T18:45\",\"Speed\":255}]\
+						\"AirflowVent_2\":[{\"StartDateTime\": \"2018.02.10 05:45\",\"EndDateTime\": \"2018.02.10 18:45\",\"Speed\":255}]\
 					}";
 	JsonObject& root = jsonBuffer.parseObject(input);
 	int LEDArraySize = root["LED"].size();
@@ -36,42 +36,42 @@ ParsedData ParsedData::PopulateDataRoot()
 	}
 
 	int NutritionsArraySize = root["Nutritions"].size();
-	Serial.println("NutritionsArraySize:");
-	Serial.print(NutritionsArraySize);
+	Serial.print("NutritionsArraySize:");
+	Serial.println(NutritionsArraySize);
 
  	for (int i = 0; i < NutritionsArraySize; i++) // Uses SizeType instead of size_t
 	{
 			NutritionDefs ND;
 			ND.N_StartDate = root["Nutritions"][i]["StartDate"].as<String>();
 			ND.N_EndDate = root["Nutritions"][i]["EndDate"].as<String>();
-			ND.EC_Value = root["Nutritions"][i]["ECValue"];
-			ND.N_Accuracy = root["Nutritions"][i]["Accuracy"];
+			ND.EC_HighValue = root["Nutritions"][i]["ECHighValue"];
+			ND.EC_LowValue = root["Nutritions"][i]["ECLowValue"];
 			Data.N_Defs.push_back(ND);
 	}
 
 	int PHArraySize = root["PH"].size();
 
-	Serial.println("PHArraySize:");
-	Serial.print(PHArraySize);
+	Serial.print("PHArraySize:");
+	Serial.println(PHArraySize);
 
 	for (int i = 0; i < PHArraySize; i++) // Uses SizeType instead of size_t
 	{
 			PHDefs PDef;
 			PDef.PhStartDate = root["PH"][i]  ["StartDate"].as<String>();
 			PDef.PhEndDate = root["PH"][i]["EndDate"].as<String>();
-			PDef.Ph_Value = root["PH"][i]["PHValue"];
-			PDef.ph_Accuracy = root["PH"][i]["Accuracy"];
+			PDef.Ph_HighValue = root["PH"][i]["PHHighValue"];
+			PDef.Ph_LowValue = root["PH"][i]["PHLowValue"];
 			Data.P_Defs.push_back(PDef);
 	}
 
 	int Vent1_Speed = root["AirflowVent_1"][0]["Speed"];
-	Serial.println("Vent1_Speed:");
-	Serial.print(Vent1_Speed);
+	Serial.print("Vent1_Speed:");
+	Serial.println(Vent1_Speed);
 	Data.vent1_speed = Vent1_Speed;
 
   int Vent2_ArraySize = root["AirflowVent_2"].size();
-	Serial.println("Vent2_ArraySize:");
-	Serial.print(Vent2_ArraySize);
+	Serial.print("Vent2_ArraySize:");
+	Serial.println(Vent2_ArraySize);
 	for (int i = 0; i < Vent2_ArraySize; i++) // Uses SizeType instead of size_t
 	{
 			AVent_2 Vent2;
@@ -95,10 +95,17 @@ float ParsedData::PhHigh_FromExtern(ParsedData P)
 				String StartDate, EndDate;
 				StartDate = it->PhStartDate;
 				EndDate = it->PhEndDate;
-				//if()
-				PhHighValue = it->Ph_Value + it->ph_Accuracy;
-				Serial.print("PH HIGH VALUE IS:::::::::::::");
-				Serial.println(PhHighValue);
+				if(IsdateIncluded(StartDate, EndDate, true))
+				{
+						PhHighValue = it->Ph_HighValue;
+						Serial.print("PH HIGH VALUE IS: ");
+						Serial.println(PhHighValue);
+				}
+				else
+				{
+						PhHighValue = -1;
+						Serial.print("PH HIGH IS NOT SET");
+				}
 		}
 		return PhHighValue;
 }
@@ -113,15 +120,23 @@ float ParsedData::PhLow_FromExtern(ParsedData P)
 			String StartDate, EndDate;
 			StartDate = it->PhStartDate;
 			EndDate = it->PhEndDate;
-			//if()
-			PhLowValue = it->Ph_Value - it->ph_Accuracy;
-			Serial.print(PhLowValue);
+			if(IsdateIncluded(StartDate, EndDate, true))
+			{
+					PhLowValue = it->Ph_LowValue;
+					Serial.print(PhLowValue);
+					Serial.print("PH LOW VALUE IS: ");
+					Serial.println(PhLowValue);
+			}
+			else
+				PhLowValue = -1;
 	}
 	return PhLowValue;
 }
 
 float ParsedData::PhOrg_FromExtern(ParsedData P)
 {
+	/*
+		This is not required for now
 		float PhValue = 0;
 		std::vector<PHDefs>::iterator it;
 
@@ -135,23 +150,28 @@ float ParsedData::PhOrg_FromExtern(ParsedData P)
 				Serial.print(PhValue);
 		}
 		return PhValue;
+	*/
 }
+
 float ParsedData::EcOrg_FromExtern(ParsedData P)
 {
-	float EC_Value = 0;
-	std::vector<NutritionDefs>::iterator it;
+	/*
+		float EC_Value = 0;
+		std::vector<NutritionDefs>::iterator it;
 
-	for( it = P.N_Defs.begin( ); it != P.N_Defs.end( ); ++it)
-	{
-			String StartDate, EndDate;
-			StartDate = it->N_StartDate;
-			EndDate = it->N_EndDate;
-			//if()
-			EC_Value = it->EC_Value + it->N_Accuracy;
-			Serial.print(EC_Value);
-	}
+		for( it = P.N_Defs.begin( ); it != P.N_Defs.end( ); ++it)
+		{
+				String StartDate, EndDate;
+				StartDate = it->N_StartDate;
+				EndDate = it->N_EndDate;
+				//if()
+				EC_Value = it->EC_Value;
+				Serial.print(EC_Value);
+		}
 	return EC_Value;
+	*/
 }
+
 float ParsedData::EcHigh_FromExtern(ParsedData P)
 {
 	float EC_HighValue = 0;
@@ -162,12 +182,22 @@ float ParsedData::EcHigh_FromExtern(ParsedData P)
 			String StartDate, EndDate;
 			StartDate = it->N_StartDate;
 			EndDate = it->N_EndDate;
-			//if()
-			EC_HighValue = it->EC_Value + it->N_Accuracy;
-			Serial.print(EC_HighValue);
+			if(IsdateIncluded(StartDate, EndDate, true))
+			{
+					EC_HighValue = it->EC_HighValue;
+					Serial.print(EC_HighValue);
+					Serial.print("EC HIGH VALUE IS: ");
+					Serial.println(EC_HighValue);
+			}
+			else
+			{
+				EC_HighValue = -1;
+				Serial.print("EC HIGH VALUE IS NOT SET");
+			}
 	}
 	return EC_HighValue;
 }
+
 float ParsedData::EcLow_FromExtern(ParsedData P)
 {
 	float EC_LowValue = 0;
@@ -178,12 +208,22 @@ float ParsedData::EcLow_FromExtern(ParsedData P)
 			String StartDate, EndDate;
 			StartDate = it->N_StartDate;
 			EndDate = it->N_EndDate;
-			//if()
-			EC_LowValue = it->EC_Value + it->N_Accuracy;
-			Serial.print(EC_LowValue);
+			if(IsdateIncluded(StartDate, EndDate, true))
+			{
+					EC_LowValue = it->EC_LowValue;
+					Serial.print(EC_LowValue);
+					Serial.print("EC LOW VALUE IS: ");
+					Serial.println(EC_LowValue);
+			}
+			else
+			{
+				EC_LowValue = -1;
+				Serial.print("EC LOW VALUE IS NOT SET");
+			}
 	}
 	return EC_LowValue;
 }
+
 bool ParsedData::LEDState_FromExtern(ParsedData P)
 {
 	bool State = false;
@@ -194,9 +234,14 @@ bool ParsedData::LEDState_FromExtern(ParsedData P)
 			String StartDate, EndDate;
 			StartDate = it->LED_StartDateTime;
 			EndDate = it->LED_EndDateTime;
-			//if()
-			State = true;
-			Serial.print(State);
+			if(IsdateIncluded(StartDate, EndDate, false))
+			{
+					State = true;
+					Serial.print(State);
+					Serial.print("LED STATE IS ON.");
+			}
+			else
+					Serial.print("LED STATE IS OFF");
 	}
 	return State;
 }
@@ -217,31 +262,46 @@ int  ParsedData::Vent2_valueFromExtern(ParsedData P)
 			StartDate = it->Vent_StartDateTime;
 			EndDate = it->Vent_EndDateTime;
 			Speed = it->VentSpeed;
-			//if()
-			Serial.print(Speed);
+			if(IsdateIncluded(StartDate, EndDate, false))
+			{
+				Serial.print(Speed);
+			}
+			else
+				Speed = 0;
 	}
 	return Speed;
 }
 
-bool ParsedData::GetConvertedTime(String DateTimeString)
+bool ParsedData::IsdateIncluded(String StartDateString, String EndDateString, bool CompareDateOnly)
 {
-		const char T[] = "2017.11.23 22:05";
-		const char *tempStr = DateTimeString.c_str();
-		int year = 0, month = 0, day = 0, hour = 0, min = 0;
-		sscanf(tempStr, "%4d.%2d.%2d %2d:%2d", &year, &month, &day, &hour, &min);
-
-		tmElements_t tmSet;
-		tmSet.Year = year - 1970;
-		tmSet.Month = month;
-		tmSet.Day = day;
-		tmSet.Hour = hour;
-		tmSet.Minute = min;
-	  time_t Converted_time = makeTime(tmSet);
-		Serial.print("time set to: ");
-		Serial.print(Converted_time);
-
+		const char *StartDate = StartDateString.c_str();
+		const char *EndDate = EndDateString.c_str();
+		tmElements_t s_tmSet;
+		tmElements_t e_tmSet;
+		int s_year = 0, s_month = 0, s_day = 0, s_hour = 0, s_min = 0;
+		int e_year = 0, e_month = 0, e_day = 0, e_hour = 0, e_min = 0;
+		if(!CompareDateOnly)
+		{
+			sscanf(StartDate, "%4d.%2d.%2d %2d:%2d", &s_year, &s_month, &s_day, &s_hour, &s_min);
+			sscanf(EndDate, "%4d.%2d.%2d %2d:%2d", &e_year, &e_month, &e_day, &e_hour, &e_min);
+			s_tmSet.Year = s_year - 1970;
+			s_tmSet.Month = s_month;
+			s_tmSet.Day = s_day;
+		}
+		else
+		{
+			sscanf(StartDate, "%4d.%2d.%2d", &s_year, &s_month, &s_day);
+			sscanf(EndDate, "%4d.%2d.%2d", &e_year, &e_month, &e_day);
+			e_tmSet.Year = e_year - 1970;
+			e_tmSet.Month = e_month;
+			e_tmSet.Day = e_day;
+			e_tmSet.Hour = e_hour;
+			e_tmSet.Minute = e_min;
+		}
+	  time_t StartDateTime = makeTime(s_tmSet);
+		time_t EndDateTime = makeTime(e_tmSet);
     time_t nw = now();
-		if(nw == Converted_time)
+		if(nw <= EndDateTime && nw >= StartDateTime)
 		{
 			return 1;
 		}
