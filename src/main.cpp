@@ -7,20 +7,21 @@
 
 
 //all the #define here:
-#define PinEcSensor 4
-#define PinPhSensor 5
-#define PinTempSensor 6
+#define PinEcSensor
+#define PinPhSensor 2
+#define PinTempSensor
 #define PinLuefterA 11
 
-#define Relai1 51   //NAME IT!
-#define Relai2 XX   //NAME IT!
-#define Relai3 XX   //NAME IT!
-#define Relai4 XX   //NAME IT!
 
-#define Relai5 XX   //NAME IT!
-#define Relai6 XX   //NAME IT!
-#define Relai7 XX   //NAME IT!
-#define Relai8 XX   //NAME IT!
+#define Relai1 47   //PUMPE1
+#define Relai2 49   //PUMPE2
+#define Relai3 51   //PUMPE3
+#define Relai4 53   //PUMPE4
+
+#define Relai5 46   //NAME IT!
+#define Relai6 48   //NAME IT!
+#define Relai7 50   //NAME IT!
+#define Relai8 52   //NAME IT!
 
 // #define PinX 0
 // #define PinX 0
@@ -37,14 +38,14 @@ void setup() {
     pinMode(PinLuefterA,OUTPUT);
 
     pinMode(Relai1,OUTPUT);
-/*    pinMode(Relai2,OUTPUT);
+    pinMode(Relai2,OUTPUT);
     pinMode(Relai3,OUTPUT);
     pinMode(Relai4,OUTPUT);
 
     pinMode(Relai5,OUTPUT);
     pinMode(Relai6,OUTPUT);
     pinMode(Relai7,OUTPUT);
-    pinMode(Relai8,OUTPUT);*/
+    pinMode(Relai8,OUTPUT);
 
 }
 
