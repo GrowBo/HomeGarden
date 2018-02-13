@@ -1,4 +1,13 @@
 //all the #include here:
+/*For the code to build successfully please download following lib from Atom home:
+1. 	ArduinoJson						-- For Json Parsing
+2. 	AVR Standard C Time Library 	--Time keeping library. 
+2.1 RTC
+2.2	Time
+2.3 Arduino-DS3231
+2.4	DS1307RTC
+3. 	StandardCplusplus				--Standard C libraries 
+*/
 #include <vector>
 #include "ArduinoJson.h"
 #include <Arduino.h>
