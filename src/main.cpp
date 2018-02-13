@@ -1,12 +1,12 @@
 //all the #include here:
 /*For the code to build successfully please download following lib from Atom home:
 1. 	ArduinoJson						-- For Json Parsing
-2. 	AVR Standard C Time Library 	--Time keeping library. 
+2. 	AVR Standard C Time Library 	--Time keeping library.
 2.1 RTC
 2.2	Time
 2.3 Arduino-DS3231
 2.4	DS1307RTC
-3. 	StandardCplusplus				--Standard C libraries 
+3. 	StandardCplusplus				--Standard C libraries
 */
 #include <vector>
 #include "ArduinoJson.h"
@@ -71,7 +71,6 @@ void setup() {
     pinMode(13,OUTPUT);
     pinMode(PinLuefterA,OUTPUT);
 
-<<<<<<< HEAD
     pinMode(Relai1,OUTPUT);
     pinMode(Relai2,OUTPUT);
     pinMode(Relai3,OUTPUT);
@@ -81,7 +80,6 @@ void setup() {
     pinMode(Relai6,OUTPUT);
     pinMode(Relai7,OUTPUT);
     pinMode(Relai8,OUTPUT);
-=======
     //TIMER SETTINGS AND INTEGRITY CHECK
     tmElements_t tm;
     if (RTC.read(tm))
@@ -106,7 +104,6 @@ void setup() {
       }
     }
 
->>>>>>> fe74d073d784cf0544835c5ba28f7b71acc7edd4
 
     //Read the json string
     ParsedJsonData = ParsedJsonData.PopulateDataRoot();
