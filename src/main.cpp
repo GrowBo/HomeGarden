@@ -4,8 +4,6 @@
 #include "../lib/debug.h"
 #include "../lib/dataobjekt.h"
 #include "../lib/relai.h"
-
-
 //all the #define here:
 #define PinEcSensor
 #define PinPhSensor 2
@@ -37,6 +35,7 @@ void setup() {
     pinMode(13,OUTPUT);
     pinMode(PinLuefterA,OUTPUT);
 
+<<<<<<< HEAD
     pinMode(Relai1,OUTPUT);
     pinMode(Relai2,OUTPUT);
     pinMode(Relai3,OUTPUT);
@@ -46,58 +45,25 @@ void setup() {
     pinMode(Relai6,OUTPUT);
     pinMode(Relai7,OUTPUT);
     pinMode(Relai8,OUTPUT);
+=======
 
+>>>>>>> fe74d073d784cf0544835c5ba28f7b71acc7edd4
 }
 
 void loop() {
   //will produce a chart, where we can see the strukture ...
   //get all the data...
 
-  //json parser should fill all the allmadata.phhigh and allmadata.phlow etc.
+
+  //checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
 
 
-    allmadata.updateph();
-    Serial.print("pH wurde geupdated.\t pH ist ");
-    Serial.println(allmadata.getph());
 
-    allmadata.updateec();
-    Serial.print("EC wurde geupdated.\t EC ist ");
-    Serial.println(allmadata.getec());
 
-    allmadata.updatetemp();
-    Serial.print("Temp wurde geupdated.\t Temp ist ");
-    Serial.println(allmadata.gettemp());
-
-    allmadata.updateluefterA(); //only when changes occur
-    Serial.print("LuefterA wurde geupdated.\t LuefterA ist ");
-    Serial.println(allmadata.getluefterApower());
-
-    checkForDataCorrectness(allmadata); //just a failsave for debugging. Shoud see if there are values we can work with.
-
-//IF CHANGES FOR VENT 1
-/*
-allmadata.setluefterApower(input); //input needs to be 0-255 function checks it tho.
-allmadata.updateluefterA();
-*/
-
-//IF PUMP OR AN OTHER RELAY NEEDS TO SWITCH ON
-/*
-pumpitvolume(pin,ml) //pin as defined top so Relai1 - Relai8; ml in ml :P;
-pumpit(pin,time) //pin as defined top so Relai1 - Relai8; Time in ms;
-onoff(pin,on or off) // pin as defined top to Relai1- Relai8; on or off as 1 or 0;
-*/
-
-//PH
-    if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh()) {
-      //send all okay ph
     }
-    else{
       //ph_adjust
     }
 
-//EC
-    if (allmadata.getec() > allmadata.geteclow() && allmadata.getec() < allmadata.getechigh()){
-      //send all okay ec
     }
     else{
       //ec_adjust
