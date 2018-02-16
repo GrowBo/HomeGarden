@@ -22,7 +22,7 @@
 //#include <DS1307RTC.h>
 //#include <DS3231.h>
 //all the #define here:
-#define PinEcSensor 9999999
+#define PinEcSensor 999
 #define PinPhSensor 2
 #define PinTempSensor 4
 #define PinLuefterA 11
