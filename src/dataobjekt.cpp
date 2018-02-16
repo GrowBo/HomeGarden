@@ -9,7 +9,6 @@ Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int 
   this->PinPhSensor = PinPhSensor;
   this->PinTempSensor = PinTempSensor;
   this->PinLuefterA = PinLuefterA;
-  luefterApower = 150;
 }
 
 Dataobjekt::~Dataobjekt(){
