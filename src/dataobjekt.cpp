@@ -2,13 +2,15 @@
 #include "../lib/ph.h"
 #include "../lib/ec.h"
 #include "../lib/temp.h"
+#include "../lib/tempAirHum.h"
 #include <Arduino.h>
 
-Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA){
+Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA, int PinTempAirHumSensor){
   this->PinEcSensor = PinEcSensor;
   this->PinPhSensor = PinPhSensor;
   this->PinTempSensor = PinTempSensor;
   this->PinLuefterA = PinLuefterA;
+  this->PinTempAirHumSensor = PinTempAirHumSensor;
 }
 
 Dataobjekt::~Dataobjekt(){
@@ -30,6 +32,10 @@ void Dataobjekt::updatetemp(){
 void Dataobjekt::updateluefterA(){
   analogWrite(PinLuefterA, luefterApower);
 };
+
+void Dataobjekt::updateTempAirHum(){
+  airtemphum_messure();
+}
 
 //GET
 

@@ -26,6 +26,7 @@
 #define PinPhSensor 2
 #define PinTempSensor 4
 #define PinLuefterA 11
+#define PinTempAirHumSensor 3
 
 
 #define Relai1 47   //PUMPE1
@@ -47,7 +48,7 @@
 // DS3231 clock;
 // RTCDateTime dt;
 //Var GLOBAL
-Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor,PinLuefterA);
+Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor,PinLuefterA,PinTempAirHumSensor);
 // ParsedData ParsedJsonData;
 //
 //
@@ -148,6 +149,9 @@ void loop() {
 
     allmadata.updateph();
     allmadata.updateec();
+    Serial.println("before");
+    allmadata.updateTempAirHum();
+    Serial.println("after");
     // allmadata.updatetemp();
     allmadata.updateluefterA(); //only when changes occur
 
@@ -176,6 +180,7 @@ void loop() {
       Serial.println(allmadata.getluefterApower());
       allmadata.updateluefterA();
       Serial.println("VENT ON");
+
       // for (int i=0;i<20;i++){
       //   onoff(RelaiLED,true);
       //   delay(100);

@@ -7,6 +7,7 @@ class Dataobjekt{
     int PinPhSensor;
     int PinTempSensor;
     int PinLuefterA;
+    int PinTempAirHumSensor;
 
     int luefterApower;
 
@@ -23,13 +24,14 @@ class Dataobjekt{
 
 
   public:
-    Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA);
+    Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA, int PinTempAirHumSensor);
     ~Dataobjekt();
     //messureup
     void updateph();
     void updateec();
     void updatetemp();
     void updateluefterA();
+    void updateTempAirHum();
     //GET
     float getec();
     float getph();
