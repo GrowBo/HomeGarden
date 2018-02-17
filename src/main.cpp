@@ -1,15 +1,14 @@
 //all the #include here:
 /*For the code to build successfully please download following lib from Atom home:
 1. 	ArduinoJson						-- For Json Parsing
-2. 	AVR Standard C Time Library 	--Time keeping library.
 2.1 RTC
 2.2	Time
 2.3 Arduino-DS3231
 2.4	DS1307RTC
 3. 	StandardCplusplus				--Standard C libraries
 */
-//#include <vector>
-//#include "ArduinoJson.h"
+#include "../lib/StandardCplusplus/vector"
+#include "../lib/ArduinoJson/ArduinoJson.h"
 #include <Arduino.h>
 #include "../lib/pythonparser.h"
 #include "../lib/debug.h"
@@ -22,7 +21,7 @@
 //#include <DS1307RTC.h>
 //#include <DS3231.h>
 //all the #define here:
-#define PinEcSensor 999
+#define PinEcSensor 9999999
 #define PinPhSensor 2
 #define PinTempSensor 4
 #define PinLuefterA 11
