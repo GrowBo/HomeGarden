@@ -1,5 +1,5 @@
-#ifndef OneWire_h
-#define OneWire_h
+#ifndef ONEWIRE_H
+#define ONEWIRE_H
 
 #include <inttypes.h>
 

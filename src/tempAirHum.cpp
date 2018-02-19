@@ -1,5 +1,5 @@
 #include "../lib/DHT.h" //DHT Bibliothek laden
-#include "../lib/tempAirHum.h" 
+#include "../lib/tempAirHum.h"
 
 #define DHTPIN 3
 
