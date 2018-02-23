@@ -1,0 +1,45 @@
+{
+    "description": "Time functions for AVR (Goldilocks, Uno, Leonardo, Mega).", 
+    "repository": {
+        "url": "https://github.com/feilipu/Arduino_RTC_Library", 
+        "type": "git"
+    }, 
+    "platforms": [
+        "atmelavr"
+    ], 
+    "export": {
+        "exclude": [
+            "extras", 
+            "docs", 
+            "tests", 
+            "test", 
+            "*.doxyfile", 
+            "*.pdf"
+        ], 
+        "include": null
+    }, 
+    "authors": [
+        {
+            "maintainer": false, 
+            "name": "Michael Duane Rice", 
+            "url": null, 
+            "email": "mike@mikerice.name"
+        }, 
+        {
+            "maintainer": true, 
+            "name": "Phillip Stevens", 
+            "url": null, 
+            "email": "phillip.stevens@gmail.com"
+        }
+    ], 
+    "keywords": [
+        "timing"
+    ], 
+    "id": 800, 
+    "name": "AVR Standard C Time Library", 
+    "frameworks": [
+        "arduino"
+    ], 
+    "version": "1.8.0-5", 
+    "homepage": null
+}
