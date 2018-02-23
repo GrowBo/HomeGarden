@@ -15,10 +15,9 @@
 #include "../lib/dataobjekt.h"
 #include "../lib/relai.h"
 #include "../lib/JsonStreamingParser.h"
-//#include <TimeLib.h>
-//#include <Time.h>
-//#include <Wire.h>
-//#include <DS1307RTC.h>
+#include "../lib/Time/TimeLib.h"
+#include "../lib/Time/Time.h"
+#include "../lib/DS1307RTC/DS1307RTC.h"
 //#include <DS3231.h>
 //all the #define here:
 #define PinEcSensor 9999999
@@ -47,7 +46,7 @@
 // RTCDateTime dt;
 //Var GLOBAL
 Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor,PinLuefterA);
-// ParsedData ParsedJsonData;
+ParsedData ParsedJsonData;
 //
 //
  void setup() {
@@ -90,7 +89,7 @@ Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor,PinLuefterA);
     digitalWrite(52,HIGH);
     digitalWrite(53,HIGH);
 
-    //TIMER SETTINGS AND INTEGRITY CHECK
+//TIMER SETTINGS AND INTEGRITY CHECK
 //     tmElements_t tm;
 //     if (RTC.read(tm))
 //     {
@@ -124,27 +123,31 @@ void loop() {
   //get all the data...
   //Serial.print("CHECKING THE DATE LIMITS");
   //CHECK IF THE CURRENT DATE TIME IS WITHIN THE RANGE
-    // float PhHighValue = ParsedJsonData.PhHigh_FromExtern(ParsedJsonData);
-    // allmadata.setphhigh(PhHighValue);
-    //
-    // float PhLowValue = ParsedJsonData.PhLow_FromExtern(ParsedJsonData);
-    // allmadata.setphlow(PhLowValue);
-    //
+  //  {
+      //float PhHighValue = ParsedJsonData.PhHigh_FromExtern(ParsedJsonData);
+      //allmadata.setphhigh(PhHighValue);
+
+      //float PhLowValue = ParsedJsonData.PhLow_FromExtern(ParsedJsonData);
+      //allmadata.setphlow(PhLowValue);
+
     // //float phValue = ParsedJsonData.PhOrg_FromExtern(ParsedJsonData);
     // //allmadata.setph(phValue);
-    //
-    // float EcHighValue = ParsedJsonData.EcHigh_FromExtern(ParsedJsonData);
-    // allmadata.setechigh(EcHighValue);
-    //
-    // float EcLowValue = ParsedJsonData.EcLow_FromExtern(ParsedJsonData);
-    // allmadata.seteclow(EcLowValue);
-    //
+
+      //float EcHighValue = ParsedJsonData.EcHigh_FromExtern(ParsedJsonData);
+      //allmadata.setechigh(EcHighValue);
+
+      //float EcLowValue = ParsedJsonData.EcLow_FromExtern(ParsedJsonData);
+      //allmadata.seteclow(EcLowValue);
+
     // //float EcValue = ParsedJsonData.EcOrg_FromExtern(ParsedJsonData);
     // //allmadata.setec(EcValue);
-    //
-    // int Vent2Speed = ParsedJsonData.Vent2_valueFromExtern(ParsedJsonData);
-    // allmadata.setluefterApower(Vent2Speed);
 
+      //int Vent2Speed = ParsedJsonData.Vent2_valueFromExtern(ParsedJsonData);
+      //allmadata.setluefterApower(Vent2Speed);
+
+      bool LEDState = ParsedJsonData.LEDState_FromExtern(ParsedJsonData);
+      allmadata.SetLEDState(RelaiLED, LEDState);
+//}
     allmadata.updateph();
     allmadata.updateec();
     // allmadata.updatetemp();

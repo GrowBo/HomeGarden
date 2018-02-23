@@ -2,6 +2,7 @@
 #include "../lib/ph.h"
 #include "../lib/ec.h"
 #include "../lib/temp.h"
+#include "../lib/LED.h"
 #include <Arduino.h>
 
 Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA){
@@ -25,6 +26,10 @@ void Dataobjekt::updateec(){
 
 void Dataobjekt::updatetemp(){
   this->temp = temp_messure(PinTempSensor);
+}
+void Dataobjekt::SetLEDState(int Pin, bool State)
+{
+  SetLEDState(Pin, State);
 }
 
 void Dataobjekt::updateluefterA(){

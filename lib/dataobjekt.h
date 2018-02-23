@@ -49,6 +49,7 @@ class Dataobjekt{
     void seteclow(float eclow);
     void setechigh(float echigh);
     void setluefterApower(int luefterApower);
+    void SetLEDState(int LEDPin, bool State);
   };
 
 #endif
