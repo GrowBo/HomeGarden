@@ -37,7 +37,7 @@
 #define Relai5 46   //NAME IT!
 #define Relai6 48   //NAME IT!
 #define Relai7 50   //NAME IT!
-#define RelaiLED 52   //NAME IT!
+#define RelaiLED 52 //LED
 
 // #define PinX 0
 // #define PinX 0
@@ -171,15 +171,20 @@ void loop() {
   */
 
     //PRESENTATION TIME
+      // Serial.println("RELAY FIRE");
+      // onoff(RelaiLED,true);
+      // Serial.println("LED ON");
+      // delay(5000);
+      // allmadata.setluefterApower(255);
+      // Serial.println("VENT SPEED SET TO");
+      // Serial.println(allmadata.getluefterApower());
+      // allmadata.updateluefterA();
+      // Serial.println("VENT ON");
+
       Serial.println("RELAY FIRE");
-      onoff(RelaiLED,true);
-      Serial.println("LED ON");
-      delay(5000);
-      allmadata.setluefterApower(255);
-      Serial.println("VENT SPEED SET TO");
-      Serial.println(allmadata.getluefterApower());
-      allmadata.updateluefterA();
-      Serial.println("VENT ON");
+      pumpit(Relai4,4000);
+      delay(1000);
+      Serial.println("STOP");
 
       // for (int i=0;i<20;i++){
       //   onoff(RelaiLED,true);
