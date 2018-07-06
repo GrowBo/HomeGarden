@@ -1,27 +1,26 @@
 #include "../lib/temp.h"
-// First we include the libraries
 #include <OneWire.h>
 #include <DallasTemperature.h>
+
+extern DallasTemperature* sensorspointer;// Pass our oneWire reference to Dallas Temperature.
+
+// First we include the libraries
 // Setup a oneWire instance to communicate with any OneWire devices
 // (not just Maxim/Dallas temperature ICs)
-#define ONE_WIRE_BUS 4
-OneWire oneWire(ONE_WIRE_BUS);
 /********************************************************************/
 // Pass our oneWire reference to Dallas Temperature.
-DallasTemperature sensors(&oneWire);
-
-float temp_messure(int pin){
+float temp_messure(OneWire* onewpoint){
   // start serial port
   // Start up the library
-
-  OneWire oneWire(ONE_WIRE_BUS);
-  sensors.begin();
-  DallasTemperature sensors(&oneWire);
-
- Serial.print(" Requesting temperatures...");
- sensors.requestTemperatures(); // Send the command to get temperature readings
- Serial.println("DONE");
-/********************************************************************/
- Serial.println(sensors.getTempCByIndex(0)); // Why "byIndex"?
- return sensors.getTempCByIndex(0);
+  if (sensorspointer != NULL){
+    sensorspointer->begin();
+    Serial.print(" Requesting temperatures...");
+    sensorspointer->requestTemperatures(); // Send the command to get temperature readings
+    Serial.println("DONE");
+    /********************************************************************/
+    Serial.println(sensorspointer->getTempCByIndex(0)); // Why "byIndex"?
+    return sensorspointer->getTempCByIndex(0);
+  }
+  else{exit(1);}
+ 
 }

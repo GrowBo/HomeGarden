@@ -16,13 +16,15 @@
 #include "../lib/dataobjekt.h"
 #include "../lib/relai.h"
 #include "../lib/JsonStreamingParser.h"
+#include <OneWire.h>
+#include <DallasTemperature.h>
 //#include <TimeLib.h>
 //#include <Time.h>
 //#include <Wire.h>
 //#include <DS1307RTC.h>
 //#include <DS3231.h>
 //all the #define here:
-#define PinEcSensor 999
+#define PinEcSensor A4
 #define PinPhSensor 2
 #define PinTempSensor 4
 #define PinLuefterA 11
@@ -39,6 +41,10 @@
 #define Relai7 50   //NAME IT!
 #define RelaiLED 52 //LED
 
+//COMMUNICATION
+char dataString[50]={0};
+int a=0;
+
 // #define PinX 0
 // #define PinX 0
 
@@ -52,8 +58,15 @@ Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor,PinLuefterA,PinTempAi
 // ParsedData ParsedJsonData;
 //
 //
+
+#define ONE_WIRE_BUS 4
+OneWire oneWire(ONE_WIRE_BUS);
+/********************************************************************/
+// Pass our oneWire reference to Dallas Temperature.
+
  void setup() {
      Serial.begin(9600);
+     allmadata.onewpoint= &oneWire;
 //     Wire.begin();
 
     /* This is alternative to the current time function.
@@ -119,6 +132,8 @@ Dataobjekt allmadata(PinEcSensor,PinPhSensor,PinTempSensor,PinLuefterA,PinTempAi
 //
 //     //Read the json string
 //     ParsedJsonData = ParsedJsonData.PopulateDataRoot();
+allmadata.onewpoint = &oneWire;
+
  }
 
 void loop() {
@@ -170,21 +185,25 @@ void loop() {
   onoff(pin,on or off) // pin as defined top to Relai1- Relai8; on or off as 1 or 0;
   */
 
-    //PRESENTATION TIME
-      // Serial.println("RELAY FIRE");
-      // onoff(RelaiLED,true);
-      // Serial.println("LED ON");
-      // delay(5000);
-      // allmadata.setluefterApower(255);
-      // Serial.println("VENT SPEED SET TO");
-      // Serial.println(allmadata.getluefterApower());
-      // allmadata.updateluefterA();
-      // Serial.println("VENT ON");
-
-      Serial.println("RELAY FIRE");
-      pumpit(Relai4,4000);
-      delay(1000);
-      Serial.println("STOP");
+  // //  PRESENTATION TIME
+  //     Serial.println("RELAY FIRE");
+  //     onoff(RelaiLED,true);
+  //     Serial.println("LED ON");
+  //     delay(5000);
+  //     allmadata.setluefterApower(255);
+  //     Serial.println("VENT SPEED SET TO");
+  //     Serial.println(allmadata.getluefterApower());
+  //     allmadata.updateluefterA();
+  //     Serial.println("VENT ON");
+  //
+  //     Serial.println("RELAY FIRE");
+  // //  pumpit(Relai4,4000);
+  //     delay(1000);
+  //     Serial.println("STOP");
+  //     a++;
+  //     sprintf(dataString, "%02X",a);
+  //     Serial.println(dataString);
+  //     delay(1000);
 
       // for (int i=0;i<20;i++){
       //   onoff(RelaiLED,true);
@@ -199,28 +218,27 @@ void loop() {
       // Serial.println("WASSERTEMPERATUR IST: ");
       // allmadata.updatetemp();
       // Serial.println(allmadata.gettemp());
-      delay(3000);
 
 
-
-    //PH
-    if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh())
-    {
-      Serial.print("PH is fine. No need for adjustments.");
-    }
-    else
-    {
-      //ph_adjust
-    }
-
-    //EC
-    if (allmadata.getec() > allmadata.geteclow() && allmadata.getec() < allmadata.getechigh())
-    {
-      Serial.print("EC is fine. No need for adjustments.");
-    }
-    else{
+    //
+    // //PH
+    // if (allmadata.getph() > allmadata.getphlow() && allmadata.getph() < allmadata.getphhigh())
+    // {
+    //   Serial.print("PH is fine. No need for adjustments.");
+    // }
+    // else
+    // {
+    //   //ph_adjust
+    // }
+    //
+    // //EC
+    // if (allmadata.getec() > allmadata.geteclow() && allmadata.getec() < allmadata.getechigh())
+    // {
+    //   Serial.print("EC is fine. No need for adjustments.");
+    // }
+    // else{
       //ec_adjust
-    }
+    // }
 //Data
     //all the checks should log their actions!
   //  sendDataToPi(); //Display the Data to the User aka. send it to the pi and the pi should display it to the user.

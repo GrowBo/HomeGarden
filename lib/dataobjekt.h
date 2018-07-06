@@ -1,7 +1,12 @@
 #ifndef DATAOBJEKT_H
 #define DATAOBJEKT_H
+#include <OneWire.h>
 
 class Dataobjekt{
+public:
+  OneWire* onewpoint;
+
+
   private:
     int PinEcSensor;
     int PinPhSensor;

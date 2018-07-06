@@ -4,7 +4,7 @@
 #include "../lib/temp.h"
 #include "../lib/tempAirHum.h"
 #include <Arduino.h>
-
+#include <OneWire.h>
 Dataobjekt::Dataobjekt(int PinEcSensor, int PinPhSensor, int PinTempSensor, int PinLuefterA, int PinTempAirHumSensor){
   this->PinEcSensor = PinEcSensor;
   this->PinPhSensor = PinPhSensor;
@@ -22,16 +22,16 @@ void Dataobjekt::updateph(){
 }
 
 void Dataobjekt::updateec(){
-  //this->ec = ec_messure(PinEcSensor);
+  this->ec = ec_messure(onewpoint);
 }
 
 void Dataobjekt::updatetemp(){
-  this->temp = temp_messure(PinTempSensor);
+  this->temp = temp_messure(onewpoint);
 }
 
 void Dataobjekt::updateluefterA(){
   analogWrite(PinLuefterA, luefterApower);
-};
+}
 
 void Dataobjekt::updateTempAirHum(){
   airtemphum_messure();
